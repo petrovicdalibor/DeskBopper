@@ -14,6 +14,7 @@ dist/*.pdb
 
 # Local self-contained publish output (shipped via GitHub Releases, not committed)
 dist-standalone/
+release-exe/
 
 # Rider / VS
 .vs/
