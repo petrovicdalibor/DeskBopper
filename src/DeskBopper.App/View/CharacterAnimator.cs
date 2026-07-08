@@ -17,14 +17,14 @@ public sealed class CharacterAnimator : IDisposable
     private readonly Func<MotionSignal> _signal;
 
     // --- Tunables (adjusted for feel in T016) ---
-    private const double BaseBobHz = 1.6;    // oscillation speed at low energy
-    private const double EnergyBobHz = 2.6;  // extra speed added at full energy
-    private const double MaxBobPixels = 6;   // peak vertical travel
-    private const double BeatBobPixels = 3;  // extra downward kick on a beat
-    private const double MaxTiltDegrees = 3;   // peak head tilt
-    private const double MaxLegDegrees = 8;  // peak leg swing at the hip
-    private const double BeatLegDegrees = 4;   // extra leg kick on a beat
-    private const double LegHopPixels = 2;   // small alternating foot lift
+    private const double BaseBobHz = 0.8;    // oscillation speed at low energy
+    private const double EnergyBobHz = 1.1;  // extra speed added at full energy
+    private const double MaxBobPixels = 4;   // peak vertical travel
+    private const double BeatBobPixels = 2;  // extra downward kick on a beat
+    private const double MaxTiltDegrees = 1.2; // peak head tilt
+    private const double MaxLegDegrees = 4;  // peak leg swing at the hip
+    private const double BeatLegDegrees = 2;   // extra leg kick on a beat
+    private const double LegHopPixels = 1;   // small alternating foot lift
     private const double EnergyAttack = 0.35; // how fast smoothed energy rises per frame
     private const double EnergyRelease = 0.08; // how fast it falls
     private const double BeatDecay = 0.86;   // per-frame decay of the beat kick
