@@ -1,0 +1,21 @@
+# .NET build output
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+publish/
+*.user
+*.suo
+
+# Rider / VS
+.vs/
+.idea/
+
+# spec-kit: agent folder may hold credentials/auth artifacts
+.claude/
+
+# OS
+Thumbs.db
+Desktop.ini
