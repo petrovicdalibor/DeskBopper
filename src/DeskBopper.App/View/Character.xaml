@@ -43,11 +43,30 @@
             <Ellipse Canvas.Left="-6" Canvas.Top="22" Width="22" Height="10" Fill="#2B2D42"/>
         </Canvas>
 
-        <!-- Body -->
-        <Ellipse x:Name="BodyFill" Canvas.Left="42" Canvas.Top="90" Width="66" Height="64" Fill="#4C6EF5"/>
-        <!-- Neck -->
-        <Rectangle x:Name="NeckFill" Canvas.Left="67" Canvas.Top="84" Width="16" Height="16"
-                   RadiusX="7" RadiusY="7" Fill="#4C6EF5"/>
+        <!-- Hoodie torso: rounded body with soft shoulders, tapering to the waist.
+             Drawn before the head group so the head overlaps the top (no neck gap). -->
+        <Path x:Name="BodyFill" Fill="#4C6EF5"
+              Data="M 52,156 C 45,150 45,118 47,102 C 48,92 58,80 75,80
+                    C 92,80 102,92 103,102 C 105,118 105,150 98,156
+                    C 88,161 62,161 52,156 Z"/>
+
+        <!-- Hood collar behind the neck -->
+        <Rectangle x:Name="CollarFill" Canvas.Left="53" Canvas.Top="82" Width="44" Height="20"
+                   RadiusX="10" RadiusY="10" Fill="#3B57C4"/>
+
+        <!-- Drawstrings with toggles -->
+        <Line X1="72" Y1="99" X2="71" Y2="120" Stroke="#EAEEF7" StrokeThickness="2.5"
+              StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+        <Line X1="79" Y1="99" X2="80" Y2="120" Stroke="#EAEEF7" StrokeThickness="2.5"
+              StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+        <Ellipse Canvas.Left="68" Canvas.Top="119" Width="6" Height="6" Fill="#EAEEF7"/>
+        <Ellipse Canvas.Left="77" Canvas.Top="119" Width="6" Height="6" Fill="#EAEEF7"/>
+
+        <!-- Front kangaroo pocket -->
+        <Rectangle x:Name="PocketFill" Canvas.Left="56" Canvas.Top="126" Width="38" Height="20"
+                   RadiusX="9" RadiusY="9" Fill="#3B57C4"/>
+        <Path Stroke="#000000" StrokeThickness="1.5" Opacity="0.18"
+              Data="M 60,129 L 90,129"/>
 
         <!-- Head group (animated) -->
         <Grid x:Name="Head" Canvas.Left="25" Canvas.Top="6"
@@ -90,21 +109,33 @@
                 <Rectangle Canvas.Left="88" Canvas.Top="44" Width="4" Height="16"
                            RadiusX="2" RadiusY="2" Fill="#66E7FF" Opacity="0.75"/>
 
-                <!-- Sleek wraparound visor -->
-                <Rectangle Canvas.Left="12" Canvas.Top="42" Width="14" Height="3.5" Fill="#15151F"/>
-                <Rectangle Canvas.Left="74" Canvas.Top="42" Width="14" Height="3.5" Fill="#15151F"/>
-                <Rectangle Canvas.Left="16" Canvas.Top="36" Width="68" Height="16"
-                           RadiusX="8" RadiusY="8">
+                <!-- Sunglasses: two lenses, a bridge, and temple arms to the cups -->
+                <Rectangle Canvas.Left="10" Canvas.Top="43" Width="16" Height="3.5"
+                           RadiusX="1.5" RadiusY="1.5" Fill="#15151F"/>
+                <Rectangle Canvas.Left="74" Canvas.Top="43" Width="16" Height="3.5"
+                           RadiusX="1.5" RadiusY="1.5" Fill="#15151F"/>
+                <Rectangle Canvas.Left="46" Canvas.Top="40" Width="8" Height="4" Fill="#15151F"/>
+                <Rectangle Canvas.Left="23" Canvas.Top="36" Width="24" Height="17"
+                           RadiusX="7" RadiusY="7">
                     <Rectangle.Fill>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0.4,1">
                             <GradientStop Color="#33344B" Offset="0"/>
                             <GradientStop Color="#0C0C15" Offset="1"/>
                         </LinearGradientBrush>
                     </Rectangle.Fill>
                 </Rectangle>
-                <!-- Cyan shine streaks across the visor -->
-                <Polygon Points="27,50 36,38 41,38 32,50" Fill="#7FEFFF" Opacity="0.9"/>
-                <Polygon Points="45,50 51,38 55,38 49,50" Fill="#7FEFFF" Opacity="0.55"/>
+                <Rectangle Canvas.Left="53" Canvas.Top="36" Width="24" Height="17"
+                           RadiusX="7" RadiusY="7">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0.4,1">
+                            <GradientStop Color="#33344B" Offset="0"/>
+                            <GradientStop Color="#0C0C15" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <!-- Subtle lens glint -->
+                <Polygon Points="28,49 34,38 38,38 32,49" Fill="#FFFFFF" Opacity="0.30"/>
+                <Polygon Points="58,49 64,38 68,38 62,49" Fill="#FFFFFF" Opacity="0.30"/>
 
                 <!-- Cool smirk -->
                 <Path Stroke="#12121C" StrokeThickness="3.5" StrokeStartLineCap="Round"

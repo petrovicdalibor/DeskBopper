@@ -42,17 +42,18 @@ public partial class Character : UserControl
     {
         var bodyBrush = VerticalGradient(
             Mix(baseColor, Colors.White, 0.20), baseColor, Mix(baseColor, Colors.Black, 0.22));
-        var neckBrush = new SolidColorBrush(baseColor); neckBrush.Freeze();
 
         Color headBase = Mix(baseColor, Colors.White, 0.34);
         var headBrush = VerticalGradient(
             Mix(headBase, Colors.White, 0.22), headBase, Mix(headBase, Colors.Black, 0.12));
 
+        var accent = new SolidColorBrush(Mix(baseColor, Colors.Black, 0.16)); accent.Freeze();
         var legs = new SolidColorBrush(Mix(baseColor, Colors.Black, 0.24)); legs.Freeze();
 
         BodyFill.Fill = bodyBrush;
-        NeckFill.Fill = neckBrush;
         HeadFill.Fill = headBrush;
+        CollarFill.Fill = accent;
+        PocketFill.Fill = accent;
         LeftLegFill.Fill = legs;
         RightLegFill.Fill = legs;
     }
