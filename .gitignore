@@ -9,6 +9,9 @@ publish/
 *.user
 *.suo
 
+# Keep the distributable exe under dist/ but not its debug symbols
+dist/*.pdb
+
 # Rider / VS
 .vs/
 .idea/
