@@ -4,27 +4,35 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             Width="200" Height="220"
-             d:DesignWidth="200" d:DesignHeight="220">
-    <!-- Vector mascot. The element named "Head" carries a TransformGroup (rotate +
-         translate) which CharacterAnimator drives per frame. RenderTransformOrigin
-         is the neck (bottom-centre of the head) so the bob pivots naturally. -->
-    <Canvas Width="200" Height="220">
+             Width="150" Height="190"
+             d:DesignWidth="150" d:DesignHeight="190">
+    <!-- Vector mascot: smaller build, with legs and shades. The element named "Head"
+         carries a TransformGroup (rotate + translate) which CharacterAnimator drives per
+         frame. RenderTransformOrigin is the neck (bottom-centre) so the bob pivots there. -->
+    <Canvas Width="150" Height="190">
 
         <!-- Soft ground shadow -->
-        <Ellipse Canvas.Left="50" Canvas.Top="196" Width="100" Height="18"
+        <Ellipse Canvas.Left="45" Canvas.Top="174" Width="60" Height="12"
                  Fill="#33000000"/>
 
-        <!-- Body (static) -->
-        <Ellipse Canvas.Left="55" Canvas.Top="120" Width="90" Height="90"
-                 Fill="#4C6EF5"/>
+        <!-- Legs -->
+        <Rectangle Canvas.Left="60" Canvas.Top="146" Width="9" Height="26"
+                   RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
+        <Rectangle Canvas.Left="81" Canvas.Top="146" Width="9" Height="26"
+                   RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
+        <!-- Feet -->
+        <Ellipse Canvas.Left="54" Canvas.Top="168" Width="22" Height="10" Fill="#2B2D42"/>
+        <Ellipse Canvas.Left="75" Canvas.Top="168" Width="22" Height="10" Fill="#2B2D42"/>
+
+        <!-- Body -->
+        <Ellipse Canvas.Left="42" Canvas.Top="90" Width="66" Height="64" Fill="#4C6EF5"/>
         <!-- Neck -->
-        <Rectangle Canvas.Left="88" Canvas.Top="108" Width="24" Height="26"
-                   RadiusX="10" RadiusY="10" Fill="#4C6EF5"/>
+        <Rectangle Canvas.Left="67" Canvas.Top="84" Width="16" Height="16"
+                   RadiusX="7" RadiusY="7" Fill="#4C6EF5"/>
 
         <!-- Head group (animated) -->
-        <Grid x:Name="Head" Canvas.Left="40" Canvas.Top="8"
-              Width="120" Height="120"
+        <Grid x:Name="Head" Canvas.Left="25" Canvas.Top="6"
+              Width="100" Height="96"
               RenderTransformOrigin="0.5,1.0">
             <Grid.RenderTransform>
                 <TransformGroup>
@@ -33,33 +41,40 @@
                 </TransformGroup>
             </Grid.RenderTransform>
 
-            <Canvas Width="120" Height="120">
+            <Canvas Width="100" Height="96">
                 <!-- Headphone band arcing over the top -->
-                <Path Stroke="#2B2D42" StrokeThickness="9" StrokeStartLineCap="Round"
+                <Path Stroke="#2B2D42" StrokeThickness="7" StrokeStartLineCap="Round"
                       StrokeEndLineCap="Round"
-                      Data="M 12,60 A 48,52 0 0 1 108,60"/>
+                      Data="M 12,48 A 38,40 0 0 1 88,48"/>
 
                 <!-- Head -->
-                <Ellipse Canvas.Left="16" Canvas.Top="14" Width="88" Height="88"
+                <Ellipse Canvas.Left="17" Canvas.Top="12" Width="66" Height="66"
                          Fill="#6BA7FF"/>
 
                 <!-- Ear cups -->
-                <Rectangle Canvas.Left="4" Canvas.Top="46" Width="22" Height="36"
-                           RadiusX="9" RadiusY="9" Fill="#2B2D42"/>
-                <Rectangle Canvas.Left="94" Canvas.Top="46" Width="22" Height="36"
-                           RadiusX="9" RadiusY="9" Fill="#2B2D42"/>
+                <Rectangle Canvas.Left="5" Canvas.Top="38" Width="16" Height="28"
+                           RadiusX="7" RadiusY="7" Fill="#2B2D42"/>
+                <Rectangle Canvas.Left="79" Canvas.Top="38" Width="16" Height="28"
+                           RadiusX="7" RadiusY="7" Fill="#2B2D42"/>
 
-                <!-- Eyes -->
-                <Ellipse Canvas.Left="44" Canvas.Top="50" Width="13" Height="16" Fill="#1B1B2F"/>
-                <Ellipse Canvas.Left="66" Canvas.Top="50" Width="13" Height="16" Fill="#1B1B2F"/>
-                <!-- Eye highlights -->
-                <Ellipse Canvas.Left="47" Canvas.Top="53" Width="4" Height="5" Fill="#FFFFFF"/>
-                <Ellipse Canvas.Left="69" Canvas.Top="53" Width="4" Height="5" Fill="#FFFFFF"/>
+                <!-- Shades: two lenses, a bridge, and temple arms to the ear cups -->
+                <Rectangle Canvas.Left="14" Canvas.Top="34" Width="10" Height="4" Fill="#1B1B2F"/>
+                <Rectangle Canvas.Left="76" Canvas.Top="34" Width="10" Height="4" Fill="#1B1B2F"/>
+                <Rectangle Canvas.Left="24" Canvas.Top="34" Width="24" Height="17"
+                           RadiusX="6" RadiusY="6" Fill="#15151F"/>
+                <Rectangle Canvas.Left="52" Canvas.Top="34" Width="24" Height="17"
+                           RadiusX="6" RadiusY="6" Fill="#15151F"/>
+                <Rectangle Canvas.Left="46" Canvas.Top="38" Width="8" Height="4" Fill="#1B1B2F"/>
+                <!-- Lens shine -->
+                <Rectangle Canvas.Left="28" Canvas.Top="37" Width="7" Height="4"
+                           RadiusX="2" RadiusY="2" Fill="#4059FF" Opacity="0.8"/>
+                <Rectangle Canvas.Left="56" Canvas.Top="37" Width="7" Height="4"
+                           RadiusX="2" RadiusY="2" Fill="#4059FF" Opacity="0.8"/>
 
                 <!-- Smile -->
-                <Path Stroke="#1B1B2F" StrokeThickness="4" StrokeStartLineCap="Round"
+                <Path Stroke="#1B1B2F" StrokeThickness="3.5" StrokeStartLineCap="Round"
                       StrokeEndLineCap="Round"
-                      Data="M 50,78 Q 61,88 72,78"/>
+                      Data="M 40,60 Q 50,69 60,60"/>
             </Canvas>
         </Grid>
     </Canvas>
