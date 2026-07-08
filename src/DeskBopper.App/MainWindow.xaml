@@ -1,12 +1,28 @@
-﻿<Window x:Class="DeskBopper.App.MainWindow"
+<Window x:Class="DeskBopper.App.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeskBopper.App"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="DeskBopper"
+        Width="220" Height="240"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        SnapsToDevicePixels="True"
+        UseLayoutRounding="True"
+        WindowStartupLocation="Manual">
+    <!-- The character (vector mascot) is added in T013. For now, a placeholder marker
+         so the transparent, click-through, always-on-top shell can be verified. -->
+    <Grid x:Name="RootLayout">
+        <Ellipse x:Name="Placeholder"
+                 Width="120" Height="120"
+                 VerticalAlignment="Bottom"
+                 HorizontalAlignment="Center"
+                 Fill="#3399FF" Opacity="0.85"/>
     </Grid>
 </Window>
