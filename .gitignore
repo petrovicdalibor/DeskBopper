@@ -12,6 +12,9 @@ publish/
 # Keep the distributable exe under dist/ but not its debug symbols
 dist/*.pdb
 
+# Local self-contained publish output (shipped via GitHub Releases, not committed)
+dist-standalone/
+
 # Rider / VS
 .vs/
 .idea/
