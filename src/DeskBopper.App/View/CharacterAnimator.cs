@@ -25,8 +25,6 @@ public sealed class CharacterAnimator : IDisposable
     private const double MaxLegDegrees = 4;  // peak leg swing at the hip
     private const double BeatLegDegrees = 2;   // extra leg kick on a beat
     private const double LegHopPixels = 1;   // small alternating foot lift
-    private const double MaxArmDegrees = 6;  // peak arm swing at the shoulder
-    private const double BeatArmDegrees = 4;   // extra arm kick on a beat
     private const double EnergyAttack = 0.35; // how fast smoothed energy rises per frame
     private const double EnergyRelease = 0.08; // how fast it falls
     private const double BeatDecay = 0.86;   // per-frame decay of the beat kick
@@ -93,12 +91,6 @@ public sealed class CharacterAnimator : IDisposable
         _character.RightLegRotateTransform.Angle = Clamp(-legSwing, -legMax, legMax);
         _character.LeftLegOffsetTransform.Y = -Math.Max(0, sinP) * LegHopPixels * _smoothedEnergy;
         _character.RightLegOffsetTransform.Y = -Math.Max(0, -sinP) * LegHopPixels * _smoothedEnergy;
-
-        // Arms counter-swing the legs (left arm forward as the left leg swings back).
-        double armSwing = sinP * MaxArmDegrees * _smoothedEnergy + _beat * BeatArmDegrees;
-        double armMax = MaxArmDegrees + BeatArmDegrees;
-        _character.LeftArmRotateTransform.Angle = Clamp(-armSwing, -armMax, armMax);
-        _character.RightArmRotateTransform.Angle = Clamp(armSwing, -armMax, armMax);
     }
 
     private double ComputeDelta(EventArgs e)
