@@ -22,6 +22,9 @@ public sealed class CharacterAnimator : IDisposable
     private const double MaxBobPixels = 16;  // peak vertical travel
     private const double BeatBobPixels = 10; // extra downward kick on a beat
     private const double MaxTiltDegrees = 7; // peak head tilt
+    private const double MaxLegDegrees = 16; // peak leg swing at the hip
+    private const double BeatLegDegrees = 9; // extra leg kick on a beat
+    private const double LegHopPixels = 4;   // small alternating foot lift
     private const double EnergyAttack = 0.35; // how fast smoothed energy rises per frame
     private const double EnergyRelease = 0.08; // how fast it falls
     private const double BeatDecay = 0.86;   // per-frame decay of the beat kick
@@ -78,6 +81,16 @@ public sealed class CharacterAnimator : IDisposable
 
         _character.HeadOffsetTransform.Y = Clamp(bob, -MaxBobPixels, MaxBobPixels + BeatBobPixels);
         _character.HeadRotateTransform.Angle = Clamp(tilt, -MaxTiltDegrees, MaxTiltDegrees);
+
+        // Legs march in anti-phase (left forward while right swings back) with a small
+        // alternating hop, so he taps his feet in time with the music.
+        double sinP = Math.Sin(_phase);
+        double legSwing = sinP * MaxLegDegrees * _smoothedEnergy + _beat * BeatLegDegrees;
+        double legMax = MaxLegDegrees + BeatLegDegrees;
+        _character.LeftLegRotateTransform.Angle = Clamp(legSwing, -legMax, legMax);
+        _character.RightLegRotateTransform.Angle = Clamp(-legSwing, -legMax, legMax);
+        _character.LeftLegOffsetTransform.Y = -Math.Max(0, sinP) * LegHopPixels * _smoothedEnergy;
+        _character.RightLegOffsetTransform.Y = -Math.Max(0, -sinP) * LegHopPixels * _smoothedEnergy;
     }
 
     private double ComputeDelta(EventArgs e)

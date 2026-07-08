@@ -15,14 +15,31 @@
         <Ellipse Canvas.Left="45" Canvas.Top="174" Width="60" Height="12"
                  Fill="#33000000"/>
 
-        <!-- Legs -->
-        <Rectangle Canvas.Left="60" Canvas.Top="146" Width="9" Height="26"
-                   RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
-        <Rectangle Canvas.Left="81" Canvas.Top="146" Width="9" Height="26"
-                   RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
-        <!-- Feet -->
-        <Ellipse Canvas.Left="54" Canvas.Top="168" Width="22" Height="10" Fill="#2B2D42"/>
-        <Ellipse Canvas.Left="75" Canvas.Top="168" Width="22" Height="10" Fill="#2B2D42"/>
+        <!-- Left leg + foot (animated as one, pivoting at the hip) -->
+        <Canvas x:Name="LeftLeg" Canvas.Left="60" Canvas.Top="146"
+                Width="9" Height="32" RenderTransformOrigin="0.5,0.06">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform x:Name="LeftLegRotate" Angle="0"/>
+                    <TranslateTransform x:Name="LeftLegOffset" Y="0"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Rectangle Width="9" Height="26" RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
+            <Ellipse Canvas.Left="-6" Canvas.Top="22" Width="22" Height="10" Fill="#2B2D42"/>
+        </Canvas>
+
+        <!-- Right leg + foot -->
+        <Canvas x:Name="RightLeg" Canvas.Left="81" Canvas.Top="146"
+                Width="9" Height="32" RenderTransformOrigin="0.5,0.06">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform x:Name="RightLegRotate" Angle="0"/>
+                    <TranslateTransform x:Name="RightLegOffset" Y="0"/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Rectangle Width="9" Height="26" RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
+            <Ellipse Canvas.Left="-6" Canvas.Top="22" Width="22" Height="10" Fill="#2B2D42"/>
+        </Canvas>
 
         <!-- Body -->
         <Ellipse Canvas.Left="42" Canvas.Top="90" Width="66" Height="64" Fill="#4C6EF5"/>
