@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DeskBopper.App/DeskBopper.App.csproj" />
+  </Folder>
+</Solution>
