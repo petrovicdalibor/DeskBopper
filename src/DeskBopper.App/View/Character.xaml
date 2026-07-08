@@ -4,11 +4,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             Width="150" Height="190"
-             d:DesignWidth="150" d:DesignHeight="190">
+             Width="120" Height="152"
+             d:DesignWidth="120" d:DesignHeight="152">
     <!-- Vector mascot: smaller build, with legs and shades. The element named "Head"
          carries a TransformGroup (rotate + translate) which CharacterAnimator drives per
-         frame. RenderTransformOrigin is the neck (bottom-centre) so the bob pivots there. -->
+         frame. RenderTransformOrigin is the neck (bottom-centre) so the bob pivots there.
+         The Viewbox scales the 150x190 artwork down to the control size. -->
+    <Viewbox Stretch="Uniform">
     <Canvas Width="150" Height="190">
 
         <!-- Soft ground shadow -->
@@ -95,4 +97,5 @@
             </Canvas>
         </Grid>
     </Canvas>
+    </Viewbox>
 </UserControl>

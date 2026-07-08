@@ -31,6 +31,14 @@ public sealed class ClickThroughController : IDisposable
     /// </summary>
     public bool Suspended { get; set; }
 
+    /// <summary>
+    /// Raised when the cursor-over-character state changes (true = pointer is on the
+    /// mascot). Used to fade the character so the user can see behind it on hover.
+    /// </summary>
+    public event Action<bool>? HoverChanged;
+
+    private bool _lastHover;
+
     public ClickThroughController(Window window, Visual hitTarget)
     {
         _window = window;
@@ -52,10 +60,19 @@ public sealed class ClickThroughController : IDisposable
 
     private void OnTick(object? sender, EventArgs e)
     {
-        bool wantInteractive = Suspended || CursorOverCharacter();
-        if (wantInteractive == _clickThrough) return; // state change needed?
-        _clickThrough = !wantInteractive;
-        WindowStyles.SetClickThrough(_window, _clickThrough);
+        bool over = CursorOverCharacter();
+        if (over != _lastHover)
+        {
+            _lastHover = over;
+            HoverChanged?.Invoke(over);
+        }
+
+        bool wantInteractive = Suspended || over;
+        if (wantInteractive == _clickThrough) // state change needed?
+        {
+            _clickThrough = !wantInteractive;
+            WindowStyles.SetClickThrough(_window, _clickThrough);
+        }
     }
 
     private bool CursorOverCharacter()

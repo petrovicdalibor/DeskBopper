@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using System.Windows.Media.Animation;
 using DeskBopper.App.Audio;
 using DeskBopper.App.Interaction;
 using DeskBopper.App.Settings;
@@ -42,6 +43,7 @@ public partial class MainWindow : Window
         WindowStyles.HideFromAltTab(this);
 
         _clickThrough = new ClickThroughController(this, Character);
+        _clickThrough.HoverChanged += OnHoverChanged;
         _clickThrough.Start();
 
         var drag = DragBehavior.Attach(this, Character);
@@ -73,6 +75,14 @@ public partial class MainWindow : Window
             // No audio device / capture unavailable: the character simply idles.
             // Graceful device handling + user feedback lands in T027.
         }
+    }
+
+    /// <summary>Fades the character on hover so the user can see behind it.</summary>
+    private void OnHoverChanged(bool hovering)
+    {
+        const double dimOpacity = 0.4;
+        var fade = new DoubleAnimation(hovering ? dimOpacity : 1.0, TimeSpan.FromMilliseconds(120));
+        Character.BeginAnimation(OpacityProperty, fade);
     }
 
     private void OnSensitivityChanged(double value)
