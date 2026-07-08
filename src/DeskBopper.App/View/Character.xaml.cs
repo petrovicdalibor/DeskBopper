@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -31,4 +32,29 @@ public partial class Character : UserControl
 
     /// <summary>Vertical hop offset for the right leg+foot group.</summary>
     public TranslateTransform RightLegOffsetTransform => RightLegOffset;
+
+    /// <summary>
+    /// Recolours the character from a single base colour: the body/neck take the base,
+    /// the head a lighter shade, and the legs a darker shade, so the whole guy stays
+    /// cohesive. Headphones, shades, and feet keep their dark accent.
+    /// </summary>
+    public void ApplyColor(Color baseColor)
+    {
+        var body = new SolidColorBrush(baseColor);
+        var head = new SolidColorBrush(Mix(baseColor, Colors.White, 0.32));
+        var legs = new SolidColorBrush(Mix(baseColor, Colors.Black, 0.22));
+        body.Freeze(); head.Freeze(); legs.Freeze();
+
+        BodyFill.Fill = body;
+        NeckFill.Fill = body;
+        HeadFill.Fill = head;
+        LeftLegFill.Fill = legs;
+        RightLegFill.Fill = legs;
+    }
+
+    private static Color Mix(Color c, Color target, double amount)
+    {
+        byte Blend(byte a, byte b) => (byte)Math.Round(a + (b - a) * amount);
+        return Color.FromRgb(Blend(c.R, target.R), Blend(c.G, target.G), Blend(c.B, target.B));
+    }
 }

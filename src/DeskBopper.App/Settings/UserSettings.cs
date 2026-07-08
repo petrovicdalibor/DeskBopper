@@ -33,6 +33,9 @@ public sealed class UserSettings
     /// <summary>Whether DeskBopper should launch on Windows sign-in.</summary>
     public bool Autostart { get; set; }
 
+    /// <summary>Base character colour as a hex string (#RRGGBB).</summary>
+    public string ColorHex { get; set; } = "#4C6EF5";
+
     public static UserSettings Load()
     {
         try

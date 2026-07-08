@@ -6,9 +6,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <!-- Dev builds are Any CPU; x64 is enforced at publish time via -r win-x64. -->
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
   </PropertyGroup>
+
+  <!-- WinForms is enabled only for ColorDialog; drop its implicit global usings so its
+       types (Application, MenuItem, Color, UserControl) don't clash with WPF's. -->
+  <ItemGroup>
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="H.NotifyIcon.Wpf" Version="2.4.1" />

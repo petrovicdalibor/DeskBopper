@@ -26,7 +26,7 @@
                     <TranslateTransform x:Name="LeftLegOffset" Y="0"/>
                 </TransformGroup>
             </Canvas.RenderTransform>
-            <Rectangle Width="9" Height="26" RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
+            <Rectangle x:Name="LeftLegFill" Width="9" Height="26" RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
             <Ellipse Canvas.Left="-6" Canvas.Top="22" Width="22" Height="10" Fill="#2B2D42"/>
         </Canvas>
 
@@ -39,14 +39,14 @@
                     <TranslateTransform x:Name="RightLegOffset" Y="0"/>
                 </TransformGroup>
             </Canvas.RenderTransform>
-            <Rectangle Width="9" Height="26" RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
+            <Rectangle x:Name="RightLegFill" Width="9" Height="26" RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
             <Ellipse Canvas.Left="-6" Canvas.Top="22" Width="22" Height="10" Fill="#2B2D42"/>
         </Canvas>
 
         <!-- Body -->
-        <Ellipse Canvas.Left="42" Canvas.Top="90" Width="66" Height="64" Fill="#4C6EF5"/>
+        <Ellipse x:Name="BodyFill" Canvas.Left="42" Canvas.Top="90" Width="66" Height="64" Fill="#4C6EF5"/>
         <!-- Neck -->
-        <Rectangle Canvas.Left="67" Canvas.Top="84" Width="16" Height="16"
+        <Rectangle x:Name="NeckFill" Canvas.Left="67" Canvas.Top="84" Width="16" Height="16"
                    RadiusX="7" RadiusY="7" Fill="#4C6EF5"/>
 
         <!-- Head group (animated) -->
@@ -67,7 +67,7 @@
                       Data="M 12,48 A 38,40 0 0 1 88,48"/>
 
                 <!-- Head -->
-                <Ellipse Canvas.Left="17" Canvas.Top="12" Width="66" Height="66"
+                <Ellipse x:Name="HeadFill" Canvas.Left="17" Canvas.Top="12" Width="66" Height="66"
                          Fill="#6BA7FF"/>
 
                 <!-- Ear cups -->

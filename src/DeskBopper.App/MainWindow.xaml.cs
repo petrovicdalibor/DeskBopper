@@ -32,6 +32,7 @@ public partial class MainWindow : Window
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         RestorePosition();
+        ApplyColorFromSettings();
 
         // Audio + animation (US1).
         _engine = new AudioEngine(new WasapiLoopbackSource()) { Sensitivity = (float)_settings.Sensitivity };
@@ -58,10 +59,48 @@ public partial class MainWindow : Window
 
         // Keep persisted autostart flag in sync with the actual registry state.
         _settings.Autostart = Autostart.IsEnabled();
-        _tray = new TrayMenu(_settings.Sensitivity, _settings.Autostart);
+        _tray = new TrayMenu(_settings.Sensitivity, _settings.Autostart, ToDrawing(_settings.ColorHex));
         _tray.SensitivityChanged += OnSensitivityChanged;
         _tray.AutostartChanged += OnAutostartChanged;
+        _tray.PickColorRequested += OnPickColorRequested;
         _tray.QuitRequested += () => Close();
+    }
+
+    private void ApplyColorFromSettings()
+    {
+        try
+        {
+            var media = (System.Windows.Media.Color)
+                System.Windows.Media.ColorConverter.ConvertFromString(_settings.ColorHex);
+            Character.ApplyColor(media);
+        }
+        catch
+        {
+            // Bad hex in settings -> keep the XAML default colour.
+        }
+    }
+
+    private void OnPickColorRequested()
+    {
+        using var dlg = new System.Windows.Forms.ColorDialog
+        {
+            FullOpen = true,
+            AnyColor = true,
+            Color = ToDrawing(_settings.ColorHex),
+        };
+        if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+
+        System.Drawing.Color d = dlg.Color;
+        _settings.ColorHex = $"#{d.R:X2}{d.G:X2}{d.B:X2}";
+        _settings.Save();
+        Character.ApplyColor(System.Windows.Media.Color.FromRgb(d.R, d.G, d.B));
+        _tray?.UpdateIconColor(d);
+    }
+
+    private static System.Drawing.Color ToDrawing(string hex)
+    {
+        try { return System.Drawing.ColorTranslator.FromHtml(hex); }
+        catch { return System.Drawing.Color.FromArgb(0x4C, 0x6E, 0xF5); }
     }
 
     private void TryStartCapture()

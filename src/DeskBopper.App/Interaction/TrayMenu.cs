@@ -33,9 +33,10 @@ public sealed class TrayMenu : IDisposable
 
     public event Action<double>? SensitivityChanged;
     public event Action<bool>? AutostartChanged;
+    public event Action? PickColorRequested;
     public event Action? QuitRequested;
 
-    public TrayMenu(double sensitivity, bool autostart)
+    public TrayMenu(double sensitivity, bool autostart, Color iconColor)
     {
         var menu = new ContextMenu();
 
@@ -49,6 +50,10 @@ public sealed class TrayMenu : IDisposable
         }
         menu.Items.Add(sensitivityRoot);
 
+        var colorItem = new MenuItem { Header = "Choose Colour…" };
+        colorItem.Click += (_, _) => PickColorRequested?.Invoke();
+        menu.Items.Add(colorItem);
+
         _autostartItem = new MenuItem { Header = "Start with Windows", IsCheckable = true, IsChecked = autostart };
         _autostartItem.Click += (_, _) => AutostartChanged?.Invoke(_autostartItem.IsChecked);
         menu.Items.Add(_autostartItem);
@@ -61,7 +66,7 @@ public sealed class TrayMenu : IDisposable
 
         MarkClosestLevel(sensitivity);
 
-        _hIcon = CreateTrayIconHandle();
+        _hIcon = CreateTrayIconHandle(iconColor);
         _icon = new TaskbarIcon
         {
             ToolTipText = "DeskBopper — bobbing to your music",
@@ -69,6 +74,15 @@ public sealed class TrayMenu : IDisposable
             ContextMenu = menu,
         };
         _icon.ForceCreate();
+    }
+
+    /// <summary>Redraws the tray icon to match a new character colour.</summary>
+    public void UpdateIconColor(Color color)
+    {
+        IntPtr old = _hIcon;
+        _hIcon = CreateTrayIconHandle(color);
+        _icon.Icon = (Icon)Icon.FromHandle(_hIcon).Clone();
+        if (old != IntPtr.Zero) DestroyIcon(old);
     }
 
     private void SelectSensitivity(double value)
@@ -91,14 +105,14 @@ public sealed class TrayMenu : IDisposable
             item.IsChecked = ReferenceEquals(item, chosen);
     }
 
-    private static IntPtr CreateTrayIconHandle()
+    private static IntPtr CreateTrayIconHandle(Color color)
     {
         using var bmp = new Bitmap(32, 32);
         using (var g = Graphics.FromImage(bmp))
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.Clear(Color.Transparent);
-            using var head = new SolidBrush(Color.FromArgb(0x6B, 0xA7, 0xFF));
+            using var head = new SolidBrush(color);
             g.FillEllipse(head, 5, 5, 22, 22);
             using var cup = new SolidBrush(Color.FromArgb(0x2B, 0x2D, 0x42));
             g.FillRectangle(cup, 2, 13, 6, 9);
