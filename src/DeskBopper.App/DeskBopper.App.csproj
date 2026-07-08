@@ -11,6 +11,14 @@
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
+  <!-- For single-file publish, bundle WPF's native DLLs into the exe (extracted at
+       runtime) so the published exe is truly self-contained. Without this WPF leaves
+       PresentationNative/wpfgfx/etc. loose next to the exe and a lone exe crashes with
+       DllNotFoundException. -->
+  <PropertyGroup Condition="'$(PublishSingleFile)' == 'true'">
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+
   <!-- WinForms is enabled only for ColorDialog; drop its implicit global usings so its
        types (Application, MenuItem, Color, UserControl) don't clash with WPF's. -->
   <ItemGroup>
