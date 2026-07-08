@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 using DeskBopper.App.Audio;
 using DeskBopper.App.Interaction;
 using DeskBopper.App.Settings;
@@ -82,19 +83,48 @@ public partial class MainWindow : Window
 
     private void OnPickColorRequested()
     {
-        using var dlg = new System.Windows.Forms.ColorDialog
-        {
-            FullOpen = true,
-            AnyColor = true,
-            Color = ToDrawing(_settings.ColorHex),
-        };
-        if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+        // Defer until the tray menu has fully closed. Showing the modal dialog
+        // synchronously from the menu click lets that same click dismiss it instantly.
+        Dispatcher.BeginInvoke(new Action(ShowColorPicker), DispatcherPriority.ApplicationIdle);
+    }
 
-        System.Drawing.Color d = dlg.Color;
-        _settings.ColorHex = $"#{d.R:X2}{d.G:X2}{d.B:X2}";
-        _settings.Save();
-        Character.ApplyColor(System.Windows.Media.Color.FromRgb(d.R, d.G, d.B));
-        _tray?.UpdateIconColor(d);
+    private void ShowColorPicker()
+    {
+        // Stop the click-through poller from toggling window styles, and drop always-on-top
+        // so the dialog isn't fighting the toy for z-order/focus.
+        if (_clickThrough is not null) _clickThrough.Suspended = true;
+        bool wasTopmost = Topmost;
+        Topmost = false;
+
+        try
+        {
+            using var dlg = new System.Windows.Forms.ColorDialog
+            {
+                FullOpen = true,
+                AnyColor = true,
+                Color = ToDrawing(_settings.ColorHex),
+            };
+            var owner = new Win32Window(new System.Windows.Interop.WindowInteropHelper(this).Handle);
+            if (dlg.ShowDialog(owner) != System.Windows.Forms.DialogResult.OK) return;
+
+            System.Drawing.Color d = dlg.Color;
+            _settings.ColorHex = $"#{d.R:X2}{d.G:X2}{d.B:X2}";
+            _settings.Save();
+            Character.ApplyColor(System.Windows.Media.Color.FromRgb(d.R, d.G, d.B));
+            _tray?.UpdateIconColor(d);
+        }
+        finally
+        {
+            Topmost = wasTopmost;
+            if (_clickThrough is not null) _clickThrough.Suspended = false;
+        }
+    }
+
+    /// <summary>Minimal owner wrapper so the WinForms dialog is parented to our window.</summary>
+    private sealed class Win32Window : System.Windows.Forms.IWin32Window
+    {
+        public Win32Window(IntPtr handle) => Handle = handle;
+        public IntPtr Handle { get; }
     }
 
     private static System.Drawing.Color ToDrawing(string hex)
