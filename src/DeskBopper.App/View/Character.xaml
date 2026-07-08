@@ -49,6 +49,26 @@
         <Rectangle x:Name="NeckFill" Canvas.Left="67" Canvas.Top="84" Width="16" Height="16"
                    RadiusX="7" RadiusY="7" Fill="#4C6EF5"/>
 
+        <!-- Left arm + hand (animated, pivoting at the shoulder) -->
+        <Canvas x:Name="LeftArm" Canvas.Left="38" Canvas.Top="98"
+                Width="10" Height="34" RenderTransformOrigin="0.5,0.1">
+            <Canvas.RenderTransform>
+                <RotateTransform x:Name="LeftArmRotate" Angle="0"/>
+            </Canvas.RenderTransform>
+            <Rectangle x:Name="LeftArmFill" Width="9" Height="26" RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
+            <Ellipse Canvas.Left="-2" Canvas.Top="22" Width="13" Height="12" Fill="#2B2D42"/>
+        </Canvas>
+
+        <!-- Right arm + hand -->
+        <Canvas x:Name="RightArm" Canvas.Left="102" Canvas.Top="98"
+                Width="10" Height="34" RenderTransformOrigin="0.5,0.1">
+            <Canvas.RenderTransform>
+                <RotateTransform x:Name="RightArmRotate" Angle="0"/>
+            </Canvas.RenderTransform>
+            <Rectangle x:Name="RightArmFill" Width="9" Height="26" RadiusX="4.5" RadiusY="4.5" Fill="#3B57C4"/>
+            <Ellipse Canvas.Left="-2" Canvas.Top="22" Width="13" Height="12" Fill="#2B2D42"/>
+        </Canvas>
+
         <!-- Head group (animated) -->
         <Grid x:Name="Head" Canvas.Left="25" Canvas.Top="6"
               Width="100" Height="96"

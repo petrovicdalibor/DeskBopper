@@ -33,6 +33,12 @@ public partial class Character : UserControl
     /// <summary>Vertical hop offset for the right leg+foot group.</summary>
     public TranslateTransform RightLegOffsetTransform => RightLegOffset;
 
+    /// <summary>Shoulder rotation for the left arm+hand group (degrees).</summary>
+    public RotateTransform LeftArmRotateTransform => LeftArmRotate;
+
+    /// <summary>Shoulder rotation for the right arm+hand group (degrees).</summary>
+    public RotateTransform RightArmRotateTransform => RightArmRotate;
+
     /// <summary>
     /// Recolours the character from a single base colour: the body/neck take the base,
     /// the head a lighter shade, and the legs a darker shade, so the whole guy stays
@@ -50,6 +56,8 @@ public partial class Character : UserControl
         HeadFill.Fill = head;
         LeftLegFill.Fill = legs;
         RightLegFill.Fill = legs;
+        LeftArmFill.Fill = legs;
+        RightArmFill.Fill = legs;
     }
 
     private static Color Mix(Color c, Color target, double amount)
